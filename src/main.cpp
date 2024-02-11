@@ -10,6 +10,8 @@ int main(void)
   {
     BeginDrawing();
       ClearBackground(RAYWHITE);
+
+      // Texto de relleno.
       DrawText("Aquí comienza la creación del zorro tareas cola digital.", 190, 200, 20, BLACK);
     EndDrawing();
   }
