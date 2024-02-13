@@ -9,10 +9,10 @@ int main(void)
   while(!WindowShouldClose())
   {
     BeginDrawing();
-      ClearBackground(RAYWHITE);
+      ClearBackground(BLACK);
 
       // Texto de relleno.
-      DrawText("Aquí comienza la creación del zorro tareas cola digital.", 190, 200, 20, BLACK);
+      DrawText("Congratulation. Now you are furry :3", 150, 200, 20, RAYWHITE);
     EndDrawing();
   }
 
