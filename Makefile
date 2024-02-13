@@ -5,7 +5,7 @@ STATIC_LIBS  := $(wildcard external/*.a)
 LIBS         := -lraylib -lGL -lm -lpthread -ldl -lrt -lX11 
 BUILD_DIR    := build
 TARGET       := app
-CFLAGS       := -Wall
+CFLAGS       := -Wall -IInclude/
 
 # Genera nombres de archivos de objeto correspondientes a los archivos .cpp
 OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(CPP_FILES))
