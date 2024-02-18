@@ -1,6 +1,7 @@
 #include <cstdio>
 #include <raylib.h>
 #include <raygui.h>
+#include <ctime>
 
 //----------------------------------------------------------------------------------
 // Declaración de las funciones de los controles
@@ -14,6 +15,13 @@ int main()
     //---------------------------------------------------------------------------------------
     int screenWidth = 800;
     int screenHeight = 450;
+
+    // Función para obtener la fecha en curso
+    std::time_t tiempoActual = std::time(nullptr);
+
+    // Definiendo el formato de la fecha
+    char buffer[80];
+    std::strftime(buffer, sizeof(buffer), "%Y-%m-%d", std::localtime(&tiempoActual));
 
     InitWindow(screenWidth, screenHeight, "Task Tail 0.0.1");
 
@@ -83,6 +91,7 @@ int main()
             GuiLabel((Rectangle){ 24, 288, 48, 24 }, "13:00 -");
             if (GuiTextBox((Rectangle){ 72, 328, 432, 24 }, cajaTexto007Text, 128, cajaTexto007EditMode)) cajaTexto007EditMode = !cajaTexto007EditMode;
             GuiLabel((Rectangle){ 24, 328, 48, 24 }, "14:00 -");
+            GuiLabel((Rectangle){ 680, 15, 80, 24 }, buffer);
             //----------------------------------------------------------------------------------
 
         EndDrawing();
