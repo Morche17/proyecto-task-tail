@@ -50,6 +50,8 @@ int main()
     SetTargetFPS(60);
     //--------------------------------------------------------------------------------------
 
+    Font scoreFont = LoadFont("Fonts/Score.TTF");
+
     while (!WindowShouldClose())    // La ventana detecta botón de cerrar o botón ESC
     {
         // Actualización
@@ -91,13 +93,15 @@ int main()
             GuiLabel((Rectangle){ 24, 288, 48, 24 }, "13:00 -");
             if (GuiTextBox((Rectangle){ 72, 328, 432, 24 }, cajaTexto007Text, 128, cajaTexto007EditMode)) cajaTexto007EditMode = !cajaTexto007EditMode;
             GuiLabel((Rectangle){ 24, 328, 48, 24 }, "14:00 -");
-            GuiLabel((Rectangle){ 680, 15, 80, 24 }, buffer);
+            // GuiLabel((Rectangle){ 680, 15, 80, 24 }, buffer);
+            DrawTextEx(scoreFont, buffer, (Vector2){600.f, 15.f}, 18.f, 1.f, BLACK);
             //----------------------------------------------------------------------------------
 
         EndDrawing();
         //----------------------------------------------------------------------------------
     }
 
+    UnloadFont(scoreFont);
     //--------------------------------------------------------------------------------------
     CloseWindow();        // Cierre de ventana
     //--------------------------------------------------------------------------------------
