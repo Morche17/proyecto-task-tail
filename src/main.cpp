@@ -102,7 +102,7 @@ int main()
             botonGuardarPressed = GuiButton((Rectangle){150, 417, 120, 24}, "Guardar");
             if (botonGuardarPressed)
             {
-              std::string escrituraCajaTexto000 = "./src/escritura_de_datos -k " + std::string(buffer) + " -v " + std::string(cajaTexto000Text);
+              std::string escrituraCajaTexto000 = "./src/escritura_de_datos --key " + std::string(buffer) + " --value " + std::string(cajaTexto000Text);
               std::system(escrituraCajaTexto000.c_str());
             }
             
