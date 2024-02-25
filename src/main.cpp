@@ -1,12 +1,30 @@
 #include <cstdio>
+#include <cstdlib>
 #include <raylib.h>
 #include <raygui.h>
 #include <ctime>
+#include <string>
+// #include "almacenamiento.cpp"
+
+// #define MAX_INPUT_CHARS 256
 
 //----------------------------------------------------------------------------------
 // Declaración de las funciones de los controles
 //----------------------------------------------------------------------------------
 
+
+// void escritura_texto_en_archivo(const char *texto)
+// {
+//   FILE *archivo = fopen("datos.txt", "w");
+//   if (archivo == NULL) {
+//       printf("Error al abrir el archivo para escritura.\n");
+//       return;
+//   }
+
+//   fprintf(archivo, "%s\n", texto);
+
+//   fclose(archivo);
+// }
 
 //------------------------------------------------------------------------------------
 int main()
@@ -15,6 +33,8 @@ int main()
     //---------------------------------------------------------------------------------------
     int screenWidth = 800;
     int screenHeight = 450;
+
+    // char texto[MAX_INPUT_CHARS+1] = {0};
 
     // Función para obtener la fecha en curso
     std::time_t tiempoActual = std::time(nullptr);
@@ -29,22 +49,24 @@ int main()
     //----------------------------------------------------------------------------------
     bool diaSiguientePressed = false;
     bool diaAnteriorPressed = false;
+    bool botonGuardarPressed = false;
     bool cajaTexto000EditMode = false;
-    char cajaTexto000Text[128] = "Escribe...";
+    char cajaTexto000Text[128] = " ";
     bool cajaTexto001EditMode = false;
-    char cajaTexto001Text[128] = "Escribe...";
+    char cajaTexto001Text[128] = " ";
     bool cajaTexto002EditMode = false;
-    char cajaTexto002Text[128] = "Escribe...";
+    char cajaTexto002Text[128] = " ";
     bool cajaTexto003EditMode = false;
-    char cajaTexto003Text[128] = "Escribe...";
+    char cajaTexto003Text[128] = " ";
     bool cajaTexto004EditMode = false;
-    char cajaTexto004Text[128] = "Escribe...";
+    char cajaTexto004Text[128] = " ";
     bool cajaTexto005EditMode = false;
-    char cajaTexto005Text[128] = "Escribe...";
+    char cajaTexto005Text[128] = " ";
     bool cajaTexto006EditMode = false;
-    char cajaTexto006Text[128] = "Escribe...";
+    char cajaTexto006Text[128] = " ";
     bool cajaTexto007EditMode = false;
-    char cajaTexto007Text[128] = "Escribe...";
+    char cajaTexto007Text[128] = " ";
+  
     //----------------------------------------------------------------------------------
 
     SetTargetFPS(60);
@@ -77,6 +99,13 @@ int main()
             {
               puts("Botón presionado");
             }
+            botonGuardarPressed = GuiButton((Rectangle){150, 417, 120, 24}, "Guardar");
+            if (botonGuardarPressed)
+            {
+              std::string escrituraCajaTexto000 = "./src/escritura_de_datos --key " + std::string(buffer) + " --value " + std::string(cajaTexto000Text);
+              std::system(escrituraCajaTexto000.c_str());
+            }
+            
             if (GuiTextBox((Rectangle){ 72, 48, 432, 24 }, cajaTexto000Text, 128, cajaTexto000EditMode)) cajaTexto000EditMode = !cajaTexto000EditMode;
             if (GuiTextBox((Rectangle){ 72, 88, 432, 24 }, cajaTexto001Text, 128, cajaTexto001EditMode)) cajaTexto001EditMode = !cajaTexto001EditMode;
             if (GuiTextBox((Rectangle){ 72, 128, 432, 24 }, cajaTexto002Text, 128, cajaTexto002EditMode)) cajaTexto002EditMode = !cajaTexto002EditMode;
