@@ -1,30 +1,14 @@
+#include <iostream>
 #include <cstdio>
 #include <cstdlib>
 #include <raylib.h>
 #include <raygui.h>
 #include <ctime>
 #include <string>
-// #include "almacenamiento.cpp"
-
-// #define MAX_INPUT_CHARS 256
 
 //----------------------------------------------------------------------------------
 // Declaración de las funciones de los controles
 //----------------------------------------------------------------------------------
-
-
-// void escritura_texto_en_archivo(const char *texto)
-// {
-//   FILE *archivo = fopen("datos.txt", "w");
-//   if (archivo == NULL) {
-//       printf("Error al abrir el archivo para escritura.\n");
-//       return;
-//   }
-
-//   fprintf(archivo, "%s\n", texto);
-
-//   fclose(archivo);
-// }
 
 //------------------------------------------------------------------------------------
 int main()
@@ -44,7 +28,8 @@ int main()
     std::strftime(buffer, sizeof(buffer), "%Y-%m-%d", std::localtime(&tiempoActual));
 
     InitWindow(screenWidth, screenHeight, "Task Tail 0.0.1");
-
+    
+    //------------------------------------------------------------------------------------
     // task-tail: inicialización de controles
     //----------------------------------------------------------------------------------
     bool diaSiguientePressed = false;

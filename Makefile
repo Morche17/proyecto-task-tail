@@ -20,7 +20,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 
 # Regla de construcción para el programa final
 $(TARGET): $(OBJ_FILES)
-	g++ $(CFLAGS) -o $@ $^ $(STATIC_LIBS)	
+	g++ $(CFLAGS) -o $@ $^ $(STATIC_LIBS)
 
 
 clean:
