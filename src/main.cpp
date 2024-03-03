@@ -188,51 +188,52 @@ int main()
                 strcpy(cajaTexto004Text, "");
                 strcpy(cajaTexto005Text, "");
                 strcpy(cajaTexto006Text, "");
+                strcpy(cajaTexto007Text, "");
             }
             botonGuardar000 = GuiButton((Rectangle){510, 48, 120, 24}, "Guardar");
             if (botonGuardar000){
-                std::string escrituraCajaTexto = "./src/escritura_de_datos --key 7h --value " + std::string(cajaTexto000Text);
+                std::string escrituraCajaTexto = "./ruby/yaml 7h " + std::string(cajaTexto000Text);
                 std::system(escrituraCajaTexto.c_str());            
             }
 
             botonGuardar001 = GuiButton((Rectangle){510, 88, 120, 24}, "Guardar");
             if (botonGuardar001){
-                std::string escrituraCajaTexto = "./src/escritura_de_datos --key 8h --value " + std::string(cajaTexto001Text);
+                std::string escrituraCajaTexto = "./ruby/yaml 8h " + std::string(cajaTexto001Text);
                 std::system(escrituraCajaTexto.c_str());
             }
 
             botonGuardar002 = GuiButton((Rectangle){510, 128, 120, 24},"Guardar");
             if (botonGuardar002){
-                std::string escrituraCajaTexto = "./src/escritura_de_datos --key 9h --value " + std::string(cajaTexto002Text);
+                std::string escrituraCajaTexto = "./ruby/yaml 9h " + std::string(cajaTexto002Text);
                 std::system(escrituraCajaTexto.c_str());        
             }
 
             botonGuardar003 = GuiButton((Rectangle){510, 168, 120, 24},"Guardar");
             if (botonGuardar003){
-                std::string escrituraCajaTexto = "./src/escritura_de_datos --key 10h --value " + std::string(cajaTexto003Text);
+                std::string escrituraCajaTexto = "./ruby/yaml 10h " + std::string(cajaTexto003Text);
                 std::system(escrituraCajaTexto.c_str());        
             }
 
             botonGuardar004 = GuiButton((Rectangle){510, 208, 120, 24},"Guardar");
             if (botonGuardar004){
-                std::string escrituraCajaTexto = "./src/escritura_de_datos --key 11h --value " + std::string(cajaTexto004Text);
+                std::string escrituraCajaTexto = "./ruby/yaml 11h " + std::string(cajaTexto004Text);
                 std::system(escrituraCajaTexto.c_str());        
             }            
 
             botonGuardar005 = GuiButton((Rectangle){510, 248, 120, 24},"Guardar");
             if (botonGuardar005){
-                std::string escrituraCajaTexto = "./src/escritura_de_datos --key 12h --value " + std::string(cajaTexto005Text);
+                std::string escrituraCajaTexto = "./ruby/yaml 12h " + std::string(cajaTexto005Text);
                 std::system(escrituraCajaTexto.c_str());        
             }
 
             botonGuardar006 = GuiButton((Rectangle){510, 288, 120, 24},"Guardar");
             if (botonGuardar006){
-                std::string escrituraCajaTexto = "./src/escritura_de_datos --key 13h --value " + std::string(cajaTexto006Text);
+                std::string escrituraCajaTexto = "./ruby/yaml 13h " + std::string(cajaTexto006Text);
                 std::system(escrituraCajaTexto.c_str());        
             }        
             botonGuardar007 = GuiButton((Rectangle){510, 328, 120, 24}, "Guardar");
             if (botonGuardar007){
-                std::string escrituraCajaTexto = "./src/escritura_de_datos --key 14h --value " + std::string(cajaTexto007Text);
+                std::string escrituraCajaTexto = "./ruby/yaml 14h " + std::string(cajaTexto007Text);
                 std::system(escrituraCajaTexto.c_str());
             }
         EndDrawing();
