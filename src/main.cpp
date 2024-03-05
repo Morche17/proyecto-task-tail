@@ -239,7 +239,8 @@ int main()
             botonCarga = GuiButton((Rectangle){275, 417, 120, 24}, "Cargar");
             if (botonCarga)
             {
-                // Definir variables para la llave y el valor
+                // Este código por ahora lo que hace es cargar los datos
+                // del yaml y mostrarlos en la caja de texto al usuario.
                 char key[MAX_STR_LENGTH] = "7h";
                 char *value = getValueForKey("2024-03-04.yml", key);
                 if (value != NULL) {
