@@ -2,7 +2,8 @@ BASE_DIR     := .
 SRC_DIR      := src
 CPP_FILES    := $(wildcard $(SRC_DIR)/*.cpp)
 STATIC_LIBS  := $(wildcard external/*.a)
-LIBS         := -lraylib -lGL -lm -lpthread -ldl -lrt -lX11 -lyaml
+# LIBS         := -lraylib -lGL -lm -lpthread -ldl -lrt -lX11 -lyaml
+LIBS         := -lyaml
 BUILD_DIR    := build
 TARGET       := app
 CFLAGS       := -Wall -IInclude/
@@ -20,7 +21,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 
 # Regla de construcción para el programa final
 $(TARGET): $(OBJ_FILES)
-	g++ $(CFLAGS) -o $@ $^ $(STATIC_LIBS)
+	g++ $(CFLAGS) -o $@ $^ $(STATIC_LIBS) $(LIBS)
 
 
 clean:

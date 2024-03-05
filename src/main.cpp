@@ -1,3 +1,4 @@
+#include <bits/types/FILE.h>
 #include <cstring>
 #include <iostream>
 #include <cstdio>
@@ -6,6 +7,9 @@
 #include <raygui.h>
 #include <ctime>
 #include <string>
+#include <yaml.h>
+
+#define MAX_STR_LENGTH 128
 
 //----------------------------------------------------------------------------------
 // Declaración de las funciones para el tiempo y fecha
@@ -61,13 +65,52 @@ void retrocederDia(Fecha &fecha) {
         fecha.dia = obtenerDiasEnMes(fecha.mes, fecha.año);
     }
 }
+//----------------------------------------------------------------------------------
+// Función para buscar valores de una llave en un yaml
+//----------------------------------------------------------------------------------
+char* getValueForKey(const char* filename, const char* key) {
+    FILE *file = fopen(filename, "rb");
+    if (!file) {
+        fprintf(stderr, "No se pudo abrir el archivo.\n");
+        return NULL;
+    }
+
+    // Configurar el analizador YAML
+    yaml_parser_t parser;
+    yaml_parser_initialize(&parser);
+    yaml_parser_set_input_file(&parser, file);
+
+    // Analizar el documento YAML
+    yaml_event_t event;
+    int done = 0;
+    char *value = NULL;
+    bool found = false;
+    while (!done && yaml_parser_parse(&parser, &event)) {
+        if (event.type == YAML_SCALAR_EVENT) {
+            if (found) {
+                value = strdup((char *)event.data.scalar.value);
+                break;
+            } else if (strcmp((char *)event.data.scalar.value, key) == 0) {
+                found = true;
+            }
+        }
+        yaml_event_delete(&event);
+    }
+
+    // Limpiar
+    yaml_parser_delete(&parser);
+    fclose(file);
+
+    return value;
+}
+
 
 //------------------------------------------------------------------------------------
 // Función principal
 //------------------------------------------------------------------------------------
 int main()
 {
-    // Inicialización
+    
     //---------------------------------------------------------------------------------------
     int screenWidth = 800;
     int screenHeight = 450;
@@ -87,7 +130,8 @@ int main()
     fecha_actual.dia = ltm->tm_mday;
     fecha_actual.mes = 1 + ltm->tm_mon;
     fecha_actual.año = 1900 + ltm->tm_year;
-
+    
+    // Inicialización de la ventana
     InitWindow(screenWidth, screenHeight, "Task Tail 0.0.1");
     
     //------------------------------------------------------------------------------------
@@ -104,6 +148,8 @@ int main()
     bool botonGuardar005 = false;
     bool botonGuardar006 = false;
     bool botonGuardar007 = false;
+    bool botonCarga = false;
+    char text[MAX_STR_LENGTH] = { 0 };
     bool cajaTexto000EditMode = false;
     char cajaTexto000Text[128] = " ";
     bool cajaTexto001EditMode = false;
@@ -143,14 +189,14 @@ int main()
             ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR))); 
 
             // raygui: dibujo de controles
-            //----------------------------------------------------------------------------------            
+            //----------------------------------------------------------------------------------
             if (GuiTextBox((Rectangle){ 72, 48, 432, 24 }, cajaTexto000Text, 128, cajaTexto000EditMode)) cajaTexto000EditMode = !cajaTexto000EditMode;
             if (GuiTextBox((Rectangle){ 72, 88, 432, 24 }, cajaTexto001Text, 128, cajaTexto001EditMode)) cajaTexto001EditMode = !cajaTexto001EditMode;
             if (GuiTextBox((Rectangle){ 72, 128, 432, 24 }, cajaTexto002Text, 128, cajaTexto002EditMode)) cajaTexto002EditMode = !cajaTexto002EditMode;
             if (GuiTextBox((Rectangle){ 72, 168, 432, 24 }, cajaTexto003Text, 128, cajaTexto003EditMode)) cajaTexto003EditMode = !cajaTexto003EditMode;
             if (GuiTextBox((Rectangle){ 72, 208, 432, 24 }, cajaTexto004Text, 128, cajaTexto004EditMode)) cajaTexto004EditMode = !cajaTexto004EditMode;
             if (GuiTextBox((Rectangle){ 72, 248, 432, 24 }, cajaTexto005Text, 128, cajaTexto005EditMode)) cajaTexto005EditMode = !cajaTexto005EditMode;
-            if (GuiTextBox((Rectangle){ 72, 288, 432, 24 }, cajaTexto006Text, 128, cajaTexto006EditMode)) cajaTexto006EditMode = !cajaTexto006EditMode;      
+            if (GuiTextBox((Rectangle){ 72, 288, 432, 24 }, cajaTexto006Text, 128, cajaTexto006EditMode)) cajaTexto006EditMode = !cajaTexto006EditMode;
             
             GuiLabel((Rectangle){ 24, 48, 48, 24 }, "7:00 -");
             GuiLabel((Rectangle){ 24, 88, 48, 24 }, "8:00 -");
@@ -168,12 +214,12 @@ int main()
             //----------------------------------------------------------------------------------
             // Botones con sus funcionalidades
             //----------------------------------------------------------------------------------
-            diaSiguientePressed = GuiButton((Rectangle){ 672, 417, 120, 24 }, "Dia siguiente"); 
+            diaSiguientePressed = GuiButton((Rectangle){ 672, 417, 120, 24 }, "Dia siguiente");
             if (diaSiguientePressed)
             {
                 avanzarDia(fecha_actual);
             }
-            diaAnteriorPressed = GuiButton((Rectangle){ 24, 417, 120, 24 }, "Dia anterior"); 
+            diaAnteriorPressed = GuiButton((Rectangle){ 24, 417, 120, 24 }, "Dia anterior");
             if (diaAnteriorPressed)
             {
                 retrocederDia(fecha_actual);
@@ -190,10 +236,25 @@ int main()
                 strcpy(cajaTexto006Text, "");
                 strcpy(cajaTexto007Text, "");
             }
+            botonCarga = GuiButton((Rectangle){275, 417, 120, 24}, "Cargar");
+            if (botonCarga)
+            {
+                // Definir variables para la llave y el valor
+                char key[MAX_STR_LENGTH] = "7h";
+                char *value = getValueForKey("2024-03-04.yml", key);
+                if (value != NULL) {
+                    strcpy(text, value);
+                    free(value);
+                } else {
+                    strcpy(text, "La llave especificada no se encontró en el archivo YAML.");
+                }
+
+                strcpy(cajaTexto000Text, text);
+            }
             botonGuardar000 = GuiButton((Rectangle){510, 48, 120, 24}, "Guardar");
             if (botonGuardar000){
                 std::string escrituraCajaTexto = "./ruby/yaml 7h " + std::string(cajaTexto000Text);
-                std::system(escrituraCajaTexto.c_str());            
+                std::system(escrituraCajaTexto.c_str());
             }
 
             botonGuardar001 = GuiButton((Rectangle){510, 88, 120, 24}, "Guardar");
@@ -205,32 +266,32 @@ int main()
             botonGuardar002 = GuiButton((Rectangle){510, 128, 120, 24},"Guardar");
             if (botonGuardar002){
                 std::string escrituraCajaTexto = "./ruby/yaml 9h " + std::string(cajaTexto002Text);
-                std::system(escrituraCajaTexto.c_str());        
+                std::system(escrituraCajaTexto.c_str());
             }
 
             botonGuardar003 = GuiButton((Rectangle){510, 168, 120, 24},"Guardar");
             if (botonGuardar003){
                 std::string escrituraCajaTexto = "./ruby/yaml 10h " + std::string(cajaTexto003Text);
-                std::system(escrituraCajaTexto.c_str());        
+                std::system(escrituraCajaTexto.c_str());
             }
 
             botonGuardar004 = GuiButton((Rectangle){510, 208, 120, 24},"Guardar");
             if (botonGuardar004){
                 std::string escrituraCajaTexto = "./ruby/yaml 11h " + std::string(cajaTexto004Text);
-                std::system(escrituraCajaTexto.c_str());        
-            }            
+                std::system(escrituraCajaTexto.c_str());
+            }
 
             botonGuardar005 = GuiButton((Rectangle){510, 248, 120, 24},"Guardar");
             if (botonGuardar005){
                 std::string escrituraCajaTexto = "./ruby/yaml 12h " + std::string(cajaTexto005Text);
-                std::system(escrituraCajaTexto.c_str());        
+                std::system(escrituraCajaTexto.c_str());
             }
 
             botonGuardar006 = GuiButton((Rectangle){510, 288, 120, 24},"Guardar");
             if (botonGuardar006){
                 std::string escrituraCajaTexto = "./ruby/yaml 13h " + std::string(cajaTexto006Text);
-                std::system(escrituraCajaTexto.c_str());        
-            }        
+                std::system(escrituraCajaTexto.c_str());
+            }
             botonGuardar007 = GuiButton((Rectangle){510, 328, 120, 24}, "Guardar");
             if (botonGuardar007){
                 std::string escrituraCajaTexto = "./ruby/yaml 14h " + std::string(cajaTexto007Text);
