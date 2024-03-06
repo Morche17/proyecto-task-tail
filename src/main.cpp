@@ -7,6 +7,7 @@
 #include <raygui.h>
 #include <ctime>
 #include <string>
+#include <fstream>
 #include <yaml.h>
 
 #define MAX_STR_LENGTH 128
@@ -103,7 +104,28 @@ char* getValueForKey(const char* filename, const char* key) {
 
     return value;
 }
-
+//------------------------------------------------------------------------------------
+// Creación de archivos yaml.
+//------------------------------------------------------------------------------------
+void crearArchivoYAML(const std::string& filename) {
+    std::ofstream archivo("misDatos/"+filename);
+    if (archivo.is_open()) {
+        archivo << "---" << std::endl;
+        archivo << "7h: ''" << std::endl;
+        archivo << "8h: ''" << std::endl;
+        archivo << "9h: ''" << std::endl;
+        archivo << "10h: ''" << std::endl;
+        archivo << "11h: ''" << std::endl;
+        archivo << "12h: ''" << std::endl;
+        archivo << "13h: ''" << std::endl;
+        archivo << "14h: ''" << std::endl;
+        archivo.close();
+        std::cout << "Archivo YAML creado exitosamente: " << filename << std::endl;
+    } else {
+        std::cerr << "Error al crear el archivo YAML: " << filename << std::endl;
+    }
+}
+//------------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------------
 // Función principal
@@ -130,6 +152,13 @@ int main()
     fecha_actual.dia = ltm->tm_mday;
     fecha_actual.mes = 1 + ltm->tm_mon;
     fecha_actual.año = 1900 + ltm->tm_year;
+
+    std::string nombreArchivoYAML = std::string(buffer) + ".yml";
+
+    std::ifstream archivo("misDatos/"+nombreArchivoYAML);
+    if (!archivo.good()) {
+        crearArchivoYAML(nombreArchivoYAML);
+    }
     
     // Inicialización de la ventana
     InitWindow(screenWidth, screenHeight, "Task Tail 0.0.1");
@@ -242,7 +271,7 @@ int main()
                 // Este código por ahora lo que hace es cargar los datos
                 // del yaml y mostrarlos en la caja de texto al usuario.
                 char key[MAX_STR_LENGTH] = "7h";
-                char *value = getValueForKey("2024-03-04.yml", key);
+                char *value = getValueForKey("2024-03-05.yml", key);
                 if (value != NULL) {
                     strcpy(text, value);
                     free(value);
@@ -251,6 +280,17 @@ int main()
                 }
 
                 strcpy(cajaTexto000Text, text);
+
+                char key2[MAX_STR_LENGTH] = "8h";
+                char *value2 = getValueForKey("2024-03-05.yml", key2);
+                if (value != NULL) {
+                    strcpy(text, value2);
+                    free(value2);
+                } else {
+                    strcpy(text, "La llave especificada no se encontró en el archivo YAML.");
+                }
+
+                strcpy(cajaTexto001Text, text);
             }
             botonGuardar000 = GuiButton((Rectangle){510, 48, 120, 24}, "Guardar");
             if (botonGuardar000){

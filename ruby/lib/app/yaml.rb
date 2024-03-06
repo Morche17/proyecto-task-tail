@@ -23,7 +23,7 @@ end
 
 # Obtener la fecha actual para usarla como parte del nombre del archivo
 fecha_actual = Time.now.strftime("%Y-%m-%d")
-archivo = "#{fecha_actual}.yml"
+archivo = "misDatos/#{fecha_actual}.yml"
 
 # Llave proporcionada como primer argumento
 nueva_llave = ARGV[0]
