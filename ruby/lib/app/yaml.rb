@@ -22,7 +22,7 @@ def escribir_datos(archivo, datos)
 end
 
 # Obtener la fecha actual para usarla como parte del nombre del archivo
-fecha_actual = Time.now.strftime("%Y-%m-%d")
+fecha_actual = Time.now.strftime("%Y-%-m-%-d")
 archivo = "misDatos/#{fecha_actual}.yml"
 
 # Llave proporcionada como primer argumento

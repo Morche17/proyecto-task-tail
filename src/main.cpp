@@ -9,8 +9,11 @@
 #include <string>
 #include <fstream>
 #include <yaml.h>
+#include <filesystem>
 
 #define MAX_STR_LENGTH 128
+
+namespace fs = std::filesystem;
 
 //----------------------------------------------------------------------------------
 // Declaración de las funciones para el tiempo y fecha
@@ -39,6 +42,12 @@ int obtenerDiasEnMes(int mes, int año) {
     }
 }
 
+// Función para verificar si existe un archivo YAML con la fecha especificada
+bool existeArchivoYAML(const std::string& fecha) {
+    std::string rutaArchivo = "misDatos/" + fecha + ".yml";
+    return fs::exists(rutaArchivo);
+}
+
 // Función para avanzar un día
 void avanzarDia(Fecha &fecha) {
     int diasEnMes = obtenerDiasEnMes(fecha.mes, fecha.año);
@@ -51,6 +60,12 @@ void avanzarDia(Fecha &fecha) {
             fecha.mes = 1;
             fecha.año++;
         }
+    }
+
+    // Verificar si existe un archivo YAML para la nueva fecha
+    std::string nuevaFecha = std::to_string(fecha.año) + "-" + std::to_string(fecha.mes) + "-" + std::to_string(fecha.dia);
+    if (existeArchivoYAML(nuevaFecha)) {
+        // Aquí puedes realizar cualquier acción adicional si el archivo existe
     }
 }
 
@@ -65,7 +80,25 @@ void retrocederDia(Fecha &fecha) {
         }
         fecha.dia = obtenerDiasEnMes(fecha.mes, fecha.año);
     }
+
+    // Verificar si existe un archivo YAML para la nueva fecha
+    std::string nuevaFecha = std::to_string(fecha.año) + "-" + std::to_string(fecha.mes) + "-" + std::to_string(fecha.dia);
+    if (existeArchivoYAML(nuevaFecha)) {
+        // Aquí puedes realizar cualquier acción adicional si el archivo existe
+    }
 }
+
+// Función para ir al día actual
+void irADiaActual(Fecha &fecha) {
+    time_t now = time(0);
+    tm* ltm = localtime(&now);
+
+    fecha.dia = ltm->tm_mday;
+    fecha.mes = 1 + ltm->tm_mon;
+    fecha.año = 1900 + ltm->tm_year;
+}
+//----------------------------------------------------------------------------------
+
 //----------------------------------------------------------------------------------
 // Función para buscar valores de una llave en un yaml
 //----------------------------------------------------------------------------------
@@ -108,7 +141,7 @@ char* getValueForKey(const char* filename, const char* key) {
 // Creación de archivos yaml.
 //------------------------------------------------------------------------------------
 void crearArchivoYAML(const std::string& filename) {
-    std::ofstream archivo("misDatos/"+filename);
+    std::ofstream archivo(filename);
     if (archivo.is_open()) {
         archivo << "---" << std::endl;
         archivo << "7h: ''" << std::endl;
@@ -153,7 +186,7 @@ int main()
     fecha_actual.mes = 1 + ltm->tm_mon;
     fecha_actual.año = 1900 + ltm->tm_year;
 
-    std::string nombreArchivoYAML = std::string(buffer) + ".yml";
+    std::string nombreArchivoYAML = "misDatos/" + std::to_string(fecha_actual.año) + "-" + std::to_string(fecha_actual.mes) + "-" + std::to_string(fecha_actual.dia) + ".yml";
 
     std::ifstream archivo("misDatos/"+nombreArchivoYAML);
     if (!archivo.good()) {
@@ -178,6 +211,7 @@ int main()
     bool botonGuardar006 = false;
     bool botonGuardar007 = false;
     bool botonCarga = false;
+    bool botonFechaActual = false;
     char text[MAX_STR_LENGTH] = { 0 };
     bool cajaTexto000EditMode = false;
     char cajaTexto000Text[128] = " ";
@@ -271,7 +305,7 @@ int main()
                 // Este código por ahora lo que hace es cargar los datos
                 // del yaml y mostrarlos en la caja de texto al usuario.
                 char key[MAX_STR_LENGTH] = "7h";
-                char *value = getValueForKey("2024-03-05.yml", key);
+                char *value = getValueForKey(("misDatos/" + std::to_string(fecha_actual.año) + "-" + std::to_string(fecha_actual.mes) + "-" + std::to_string(fecha_actual.dia) + ".yml").c_str(), key);
                 if (value != NULL) {
                     strcpy(text, value);
                     free(value);
@@ -282,8 +316,8 @@ int main()
                 strcpy(cajaTexto000Text, text);
 
                 char key2[MAX_STR_LENGTH] = "8h";
-                char *value2 = getValueForKey("2024-03-05.yml", key2);
-                if (value != NULL) {
+                char *value2 = getValueForKey(("misDatos/" + std::to_string(fecha_actual.año) + "-" + std::to_string(fecha_actual.mes) + "-" + std::to_string(fecha_actual.dia) + ".yml").c_str(), key2);
+                if (value2 != NULL) {
                     strcpy(text, value2);
                     free(value2);
                 } else {
@@ -291,7 +325,45 @@ int main()
                 }
 
                 strcpy(cajaTexto001Text, text);
+
+                char key3[MAX_STR_LENGTH] = "9h";
+                char *value3 = getValueForKey(("misDatos/" + std::to_string(fecha_actual.año) + "-" + std::to_string(fecha_actual.mes) + "-" + std::to_string(fecha_actual.dia) + ".yml").c_str(), key3);
+                if (value3 != NULL) {
+                    strcpy(text, value3);
+                    free(value3);
+                } else {
+                    strcpy(text, "La llave especificada no se encontró en el archivo YAML.");
+                }
+
+                strcpy(cajaTexto002Text, text);
+
+                char key4[MAX_STR_LENGTH] = "10h";
+                char *value4 = getValueForKey(("misDatos/" + std::to_string(fecha_actual.año) + "-" + std::to_string(fecha_actual.mes) + "-" + std::to_string(fecha_actual.dia) + ".yml").c_str(), key4);
+                if (value4 != NULL) {
+                    strcpy(text, value4);
+                    free(value4);
+                } else {
+                    strcpy(text, "La llave especificada no se encontró en el archivo YAML.");
+                }
+
+                strcpy(cajaTexto003Text, text);
+                char key5[MAX_STR_LENGTH] = "11h";
+                char *value5 = getValueForKey(("misDatos/" + std::to_string(fecha_actual.año) + "-" + std::to_string(fecha_actual.mes) + "-" + std::to_string(fecha_actual.dia) + ".yml").c_str(), key5);
+                if (value5 != NULL) {
+                    strcpy(text, value5);
+                    free(value5);
+                } else {
+                    strcpy(text, "La llave especificada no se encontró en el archivo YAML.");
+                }
+
+                strcpy(cajaTexto004Text, text);            
             }
+
+            botonFechaActual = GuiButton((Rectangle){510, 417, 120, 24}, "Fecha actual");
+            if (botonFechaActual){
+                irADiaActual(fecha_actual);
+            }
+
             botonGuardar000 = GuiButton((Rectangle){510, 48, 120, 24}, "Guardar");
             if (botonGuardar000){
                 std::string escrituraCajaTexto = "./ruby/yaml 7h " + std::string(cajaTexto000Text);
