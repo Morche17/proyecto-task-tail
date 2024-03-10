@@ -21,15 +21,14 @@ def escribir_datos(archivo, datos)
   File.write(archivo, YAML.dump(datos))
 end
 
-# Obtener la fecha actual para usarla como parte del nombre del archivo
-fecha_actual = Time.now.strftime("%Y-%-m-%-d")
-archivo = "misDatos/#{fecha_actual}.yml"
+# Obtener el nombre del archivo donde se va a escribir, proporcionado como el primer argumento
+archivo = ARGV[0]
 
-# Llave proporcionada como primer argumento
-nueva_llave = ARGV[0]
+# Llave proporcionada como segundo argumento
+nueva_llave = ARGV[1]
 
 # Valor proporcionado como el resto de los argumentos
-nuevo_valor = ARGV.drop(1).join(" ")
+nuevo_valor = ARGV.drop(2).join(" ")
 
 # Leer los datos del archivo YAML
 contenido = leer_datos(archivo)

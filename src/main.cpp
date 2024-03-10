@@ -63,10 +63,10 @@ void avanzarDia(Fecha &fecha) {
     }
 
     // Verificar si existe un archivo YAML para la nueva fecha
-    std::string nuevaFecha = std::to_string(fecha.año) + "-" + std::to_string(fecha.mes) + "-" + std::to_string(fecha.dia);
-    if (existeArchivoYAML(nuevaFecha)) {
-        // Aquí puedes realizar cualquier acción adicional si el archivo existe
-    }
+    // std::string nuevaFecha = std::to_string(fecha.año) + "-" + std::to_string(fecha.mes) + "-" + std::to_string(fecha.dia);
+    // if (existeArchivoYAML(nuevaFecha)) {
+    //     // Aquí puedes realizar cualquier acción adicional si el archivo existe
+    // }
 }
 
 // Función para retroceder un día
@@ -82,10 +82,10 @@ void retrocederDia(Fecha &fecha) {
     }
 
     // Verificar si existe un archivo YAML para la nueva fecha
-    std::string nuevaFecha = std::to_string(fecha.año) + "-" + std::to_string(fecha.mes) + "-" + std::to_string(fecha.dia);
-    if (existeArchivoYAML(nuevaFecha)) {
-        // Aquí puedes realizar cualquier acción adicional si el archivo existe
-    }
+    // std::string nuevaFecha = std::to_string(fecha.año) + "-" + std::to_string(fecha.mes) + "-" + std::to_string(fecha.dia);
+    // if (existeArchivoYAML(nuevaFecha)) {
+    //     // Aquí puedes realizar cualquier acción adicional si el archivo existe
+    // }
 }
 
 // Función para ir al día actual
