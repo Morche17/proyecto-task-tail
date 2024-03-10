@@ -347,6 +347,7 @@ int main()
                 }
 
                 strcpy(cajaTexto003Text, text);
+
                 char key5[MAX_STR_LENGTH] = "11h";
                 char *value5 = getValueForKey(("misDatos/" + std::to_string(fecha_actual.año) + "-" + std::to_string(fecha_actual.mes) + "-" + std::to_string(fecha_actual.dia) + ".yml").c_str(), key5);
                 if (value5 != NULL) {
@@ -357,6 +358,39 @@ int main()
                 }
 
                 strcpy(cajaTexto004Text, text);            
+
+                char key6[MAX_STR_LENGTH] = "12h";
+                char *value6 = getValueForKey(("misDatos/" + std::to_string(fecha_actual.año) + "-" + std::to_string(fecha_actual.mes) + "-" + std::to_string(fecha_actual.dia) + ".yml").c_str(), key6);
+                if (value6 != NULL) {
+                    strcpy(text, value6);
+                    free(value6);
+                } else {
+                    strcpy(text, "La llave especificada no se encontró en el archivo YAML.");
+                }
+
+                strcpy(cajaTexto005Text, text);            
+
+                char key7[MAX_STR_LENGTH] = "13h";
+                char *value7 = getValueForKey(("misDatos/" + std::to_string(fecha_actual.año) + "-" + std::to_string(fecha_actual.mes) + "-" + std::to_string(fecha_actual.dia) + ".yml").c_str(), key7);
+                if (value7 != NULL) {
+                    strcpy(text, value7);
+                    free(value7);
+                } else {
+                    strcpy(text, "La llave especificada no se encontró en el archivo YAML.");
+                }
+
+                strcpy(cajaTexto006Text, text);                    
+
+                char key8[MAX_STR_LENGTH] = "14h";
+                char *value8 = getValueForKey(("misDatos/" + std::to_string(fecha_actual.año) + "-" + std::to_string(fecha_actual.mes) + "-" + std::to_string(fecha_actual.dia) + ".yml").c_str(), key8);
+                if (value8 != NULL) {
+                    strcpy(text, value8);
+                    free(value8);
+                } else {
+                    strcpy(text, "La llave especificada no se encontró en el archivo YAML.");
+                }
+
+                strcpy(cajaTexto007Text, text);    
             }
 
             botonFechaActual = GuiButton((Rectangle){510, 417, 120, 24}, "Fecha actual");
