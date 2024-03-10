@@ -132,9 +132,16 @@ void avanzarDia(Fecha &fecha) {
             fecha.año++;
         }
     }
+
+    std::string actualizacionYAML = "misDatos/" + std::to_string(fecha.año) + "-" + std::to_string(fecha.mes) + "-" + std::to_string(fecha.dia) + ".yml";
+    std::ifstream archivo(actualizacionYAML); // Intentamos abrir el archivo en modo de lectura
+    if (!archivo.is_open()) { // Si el archivo no se pudo abrir, entonces no existe y lo creamos
+        crearArchivoYAML(actualizacionYAML);
+    }
+    archivo.close(); // Cerramos el archivo
 }
 
-// Función para retroceder un día
+// Función para retroceder el día del calendario
 void retrocederDia(Fecha &fecha) {
     fecha.dia--;
     if (fecha.dia < 1) {
@@ -145,7 +152,15 @@ void retrocederDia(Fecha &fecha) {
         }
         fecha.dia = obtenerDiasEnMes(fecha.mes, fecha.año);
     }
+
+    std::string actualizacionYAML = "misDatos/" + std::to_string(fecha.año) + "-" + std::to_string(fecha.mes) + "-" + std::to_string(fecha.dia) + ".yml";
+    std::ifstream archivo(actualizacionYAML); // Intentamos abrir el archivo en modo de lectura
+    if (!archivo.is_open()) { // Si el archivo no se pudo abrir, entonces no existe y lo creamos
+        crearArchivoYAML(actualizacionYAML);
+    }
+    archivo.close(); // Cerramos el archivo
 }
+
 //------------------------------------------------------------------------------------
 // Función principal
 //------------------------------------------------------------------------------------
@@ -267,21 +282,11 @@ int main()
             if (diaSiguientePressed)
             {
                 avanzarDia(fecha_actual);
-                std::string actualizacionYAML = "misDatos/" + std::to_string(fecha_actual.año) + "-" + std::to_string(fecha_actual.mes) + "-" + std::to_string(fecha_actual.dia) + ".yml";
-                std::ifstream archivo("misDatos/"+actualizacionYAML);
-                    if (!archivo.good()) {
-                        crearArchivoYAML(actualizacionYAML);
-                    }
             }
             diaAnteriorPressed = GuiButton((Rectangle){ 24, 417, 120, 24 }, "Dia anterior");
             if (diaAnteriorPressed)
             {
                 retrocederDia(fecha_actual);
-                std::string actualizacionYAML = "misDatos/" + std::to_string(fecha_actual.año) + "-" + std::to_string(fecha_actual.mes) + "-" + std::to_string(fecha_actual.dia) + ".yml";
-                std::ifstream archivo("misDatos/"+actualizacionYAML);
-                    if (!archivo.good()) {
-                        crearArchivoYAML(actualizacionYAML);
-                    }
             }
             botonLimpiarPressed = GuiButton((Rectangle){150, 417, 120, 24}, "Limpiar");
             if (botonLimpiarPressed)
