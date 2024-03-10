@@ -48,46 +48,6 @@ bool existeArchivoYAML(const std::string& fecha) {
     return fs::exists(rutaArchivo);
 }
 
-// Función para avanzar un día
-void avanzarDia(Fecha &fecha) {
-    int diasEnMes = obtenerDiasEnMes(fecha.mes, fecha.año);
-
-    fecha.dia++;
-    if (fecha.dia > diasEnMes) {
-        fecha.dia = 1;
-        fecha.mes++;
-        if (fecha.mes > 12) {
-            fecha.mes = 1;
-            fecha.año++;
-        }
-    }
-
-    // Verificar si existe un archivo YAML para la nueva fecha
-    // std::string nuevaFecha = std::to_string(fecha.año) + "-" + std::to_string(fecha.mes) + "-" + std::to_string(fecha.dia);
-    // if (existeArchivoYAML(nuevaFecha)) {
-    //     // Aquí puedes realizar cualquier acción adicional si el archivo existe
-    // }
-}
-
-// Función para retroceder un día
-void retrocederDia(Fecha &fecha) {
-    fecha.dia--;
-    if (fecha.dia < 1) {
-        fecha.mes--;
-        if (fecha.mes < 1) {
-            fecha.mes = 12;
-            fecha.año--;
-        }
-        fecha.dia = obtenerDiasEnMes(fecha.mes, fecha.año);
-    }
-
-    // Verificar si existe un archivo YAML para la nueva fecha
-    // std::string nuevaFecha = std::to_string(fecha.año) + "-" + std::to_string(fecha.mes) + "-" + std::to_string(fecha.dia);
-    // if (existeArchivoYAML(nuevaFecha)) {
-    //     // Aquí puedes realizar cualquier acción adicional si el archivo existe
-    // }
-}
-
 // Función para ir al día actual
 void irADiaActual(Fecha &fecha) {
     time_t now = time(0);
@@ -159,7 +119,33 @@ void crearArchivoYAML(const std::string& filename) {
     }
 }
 //------------------------------------------------------------------------------------
+// Función para avanzar un día
+void avanzarDia(Fecha &fecha) {
+    int diasEnMes = obtenerDiasEnMes(fecha.mes, fecha.año);
 
+    fecha.dia++;
+    if (fecha.dia > diasEnMes) {
+        fecha.dia = 1;
+        fecha.mes++;
+        if (fecha.mes > 12) {
+            fecha.mes = 1;
+            fecha.año++;
+        }
+    }
+}
+
+// Función para retroceder un día
+void retrocederDia(Fecha &fecha) {
+    fecha.dia--;
+    if (fecha.dia < 1) {
+        fecha.mes--;
+        if (fecha.mes < 1) {
+            fecha.mes = 12;
+            fecha.año--;
+        }
+        fecha.dia = obtenerDiasEnMes(fecha.mes, fecha.año);
+    }
+}
 //------------------------------------------------------------------------------------
 // Función principal
 //------------------------------------------------------------------------------------
@@ -281,11 +267,21 @@ int main()
             if (diaSiguientePressed)
             {
                 avanzarDia(fecha_actual);
+                std::string actualizacionYAML = "misDatos/" + std::to_string(fecha_actual.año) + "-" + std::to_string(fecha_actual.mes) + "-" + std::to_string(fecha_actual.dia) + ".yml";
+                std::ifstream archivo("misDatos/"+actualizacionYAML);
+                    if (!archivo.good()) {
+                        crearArchivoYAML(actualizacionYAML);
+                    }
             }
             diaAnteriorPressed = GuiButton((Rectangle){ 24, 417, 120, 24 }, "Dia anterior");
             if (diaAnteriorPressed)
             {
                 retrocederDia(fecha_actual);
+                std::string actualizacionYAML = "misDatos/" + std::to_string(fecha_actual.año) + "-" + std::to_string(fecha_actual.mes) + "-" + std::to_string(fecha_actual.dia) + ".yml";
+                std::ifstream archivo("misDatos/"+actualizacionYAML);
+                    if (!archivo.good()) {
+                        crearArchivoYAML(actualizacionYAML);
+                    }
             }
             botonLimpiarPressed = GuiButton((Rectangle){150, 417, 120, 24}, "Limpiar");
             if (botonLimpiarPressed)
@@ -400,48 +396,56 @@ int main()
 
             botonGuardar000 = GuiButton((Rectangle){510, 48, 120, 24}, "Guardar");
             if (botonGuardar000){
-                std::string escrituraCajaTexto = "./ruby/yaml 7h " + std::string(cajaTexto000Text);
+                std::string nombreArchivoYAML = "misDatos/" + std::to_string(fecha_actual.año) + "-" + std::to_string(fecha_actual.mes) + "-" + std::to_string(fecha_actual.dia) + ".yml";
+                std::string escrituraCajaTexto = "./ruby/yaml " + nombreArchivoYAML + " 7h " + std::string(cajaTexto000Text);
                 std::system(escrituraCajaTexto.c_str());
             }
 
             botonGuardar001 = GuiButton((Rectangle){510, 88, 120, 24}, "Guardar");
             if (botonGuardar001){
-                std::string escrituraCajaTexto = "./ruby/yaml 8h " + std::string(cajaTexto001Text);
+                std::string nombreArchivoYAML = "misDatos/" + std::to_string(fecha_actual.año) + "-" + std::to_string(fecha_actual.mes) + "-" + std::to_string(fecha_actual.dia) + ".yml";
+                std::string escrituraCajaTexto = "./ruby/yaml " + nombreArchivoYAML + " 8h " + std::string(cajaTexto001Text);
                 std::system(escrituraCajaTexto.c_str());
             }
 
             botonGuardar002 = GuiButton((Rectangle){510, 128, 120, 24},"Guardar");
             if (botonGuardar002){
-                std::string escrituraCajaTexto = "./ruby/yaml 9h " + std::string(cajaTexto002Text);
+                std::string nombreArchivoYAML = "misDatos/" + std::to_string(fecha_actual.año) + "-" + std::to_string(fecha_actual.mes) + "-" + std::to_string(fecha_actual.dia) + ".yml";
+                std::string escrituraCajaTexto = "./ruby/yaml " + nombreArchivoYAML + " 9h " + std::string(cajaTexto002Text);
                 std::system(escrituraCajaTexto.c_str());
             }
 
             botonGuardar003 = GuiButton((Rectangle){510, 168, 120, 24},"Guardar");
             if (botonGuardar003){
-                std::string escrituraCajaTexto = "./ruby/yaml 10h " + std::string(cajaTexto003Text);
+                std::string nombreArchivoYAML = "misDatos/" + std::to_string(fecha_actual.año) + "-" + std::to_string(fecha_actual.mes) + "-" + std::to_string(fecha_actual.dia) + ".yml";
+                std::string escrituraCajaTexto = "./ruby/yaml " + nombreArchivoYAML + " 10h " + std::string(cajaTexto003Text);
                 std::system(escrituraCajaTexto.c_str());
             }
 
             botonGuardar004 = GuiButton((Rectangle){510, 208, 120, 24},"Guardar");
             if (botonGuardar004){
-                std::string escrituraCajaTexto = "./ruby/yaml 11h " + std::string(cajaTexto004Text);
+                std::string nombreArchivoYAML = "misDatos/" + std::to_string(fecha_actual.año) + "-" + std::to_string(fecha_actual.mes) + "-" + std::to_string(fecha_actual.dia) + ".yml";
+                std::string escrituraCajaTexto = "./ruby/yaml " + nombreArchivoYAML + " 11h " + std::string(cajaTexto004Text);
                 std::system(escrituraCajaTexto.c_str());
             }
 
             botonGuardar005 = GuiButton((Rectangle){510, 248, 120, 24},"Guardar");
             if (botonGuardar005){
-                std::string escrituraCajaTexto = "./ruby/yaml 12h " + std::string(cajaTexto005Text);
+                std::string nombreArchivoYAML = "misDatos/" + std::to_string(fecha_actual.año) + "-" + std::to_string(fecha_actual.mes) + "-" + std::to_string(fecha_actual.dia) + ".yml";
+                std::string escrituraCajaTexto = "./ruby/yaml " + nombreArchivoYAML + " 12h " + std::string(cajaTexto005Text);
                 std::system(escrituraCajaTexto.c_str());
             }
 
             botonGuardar006 = GuiButton((Rectangle){510, 288, 120, 24},"Guardar");
             if (botonGuardar006){
-                std::string escrituraCajaTexto = "./ruby/yaml 13h " + std::string(cajaTexto006Text);
+                std::string nombreArchivoYAML = "misDatos/" + std::to_string(fecha_actual.año) + "-" + std::to_string(fecha_actual.mes) + "-" + std::to_string(fecha_actual.dia) + ".yml";
+                std::string escrituraCajaTexto = "./ruby/yaml " + nombreArchivoYAML + " 13h " + std::string(cajaTexto006Text);
                 std::system(escrituraCajaTexto.c_str());
             }
             botonGuardar007 = GuiButton((Rectangle){510, 328, 120, 24}, "Guardar");
             if (botonGuardar007){
-                std::string escrituraCajaTexto = "./ruby/yaml 14h " + std::string(cajaTexto007Text);
+                std::string nombreArchivoYAML = "misDatos/" + std::to_string(fecha_actual.año) + "-" + std::to_string(fecha_actual.mes) + "-" + std::to_string(fecha_actual.dia) + ".yml";
+                std::string escrituraCajaTexto = "./ruby/yaml " + nombreArchivoYAML + " 14h " + std::string(cajaTexto007Text);
                 std::system(escrituraCajaTexto.c_str());
             }
         EndDrawing();
