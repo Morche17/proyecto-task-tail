@@ -17,5 +17,5 @@ El desarrollo de la aplicación ha finalizado.
 ## Contribuyentes y créditos
 
 - [Emanuel Tavares](https://github.com/Morche17) - Creador
-- [Julio Adrián](https://github.com/juadr1) - Coocreador
-- [Luis Hernández]() - Documentación
+- [Julio Meza](https://github.com/juadr1) - Coocreador
+- [Luis Muñoz]() - Documentación
