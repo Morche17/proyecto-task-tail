@@ -195,7 +195,7 @@ int main()
     }
     
     // Inicialización de la ventana
-    InitWindow(screenWidth, screenHeight, "Task Tail 0.0.1");
+    InitWindow(screenWidth, screenHeight, "Task Tail 0.1.0");
     
     //------------------------------------------------------------------------------------
     // task-tail: inicialización de controles

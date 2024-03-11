@@ -5,7 +5,7 @@ STATIC_LIBS  := $(wildcard external/*.a)
 # LIBS         := -lraylib -lGL -lm -lpthread -ldl -lrt -lX11 -lyaml
 LIBS         := -lyaml
 BUILD_DIR    := build
-TARGET       := app
+TARGET       := task-tail
 CFLAGS       := -Wall -IInclude/
 
 # Genera nombres de archivos de objeto correspondientes a los archivos .cpp
