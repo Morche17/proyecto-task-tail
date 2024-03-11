@@ -1,0 +1,2 @@
+2024-03-11
+Aquí se almacenan los datos de guardado del usuario.

@@ -1,27 +1,21 @@
-# experimental
+# Task Tail versión 0.1.0
 
-TODO: Write a description here
+Task Tail es una aplicación de escritorio linux escrita en c++ y ruby para la gestión personal de tareas. Este es un proyecto para la materia de tópicos avanzados de programación.
 
-## Installation
+## Instalación
 
-TODO: Write installation instructions here
+Se necesita crear una carpeta llamada `build` para la compilación. Después ejecuta el comando `make all` para hacer uso del makefile. Esto debería crear un binario ejecutable.
 
-## Usage
+## Uso
 
-TODO: Write usage instructions here
+Al abrir la aplicación aparecerá una ventana.
 
-## Development
+## Desarrollo
 
-TODO: Write development instructions here
+El desarrollo de la aplicación ha finalizado.
 
-## Contributing
+## Contribuyentes y créditos
 
-1. Fork it (<https://github.com/your-github-user/experimental/fork>)
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
-
-## Contributors
-
-- [Emanuel Tavares](https://github.com/your-github-user) - creator and maintainer
+- [Emanuel Tavares](https://github.com/Morche17) - Creador
+- [Julio Adrián](https://github.com/juadr1) - Coocreador
+- [Luis Hernández]() - Documentación
